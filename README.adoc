@@ -1,4 +1,4 @@
-image::redhatraffle-logo.png[Red Hat Raffle Logo] = Red Hat Raffle
+image::redhat_raffle_big.png[Red Hat Raffle Logo] = Red Hat Raffle
 
 IMPORTANT: Requires Node.js 8.11 or greater and `npm` 5.6 or greater.
 
