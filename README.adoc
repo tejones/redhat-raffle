@@ -31,7 +31,7 @@ To initialize the database:
 ----
 $ cd raffle-persistance
 
-$ oc new-app postgresql-persistent --name=raffle-postgres -p DATABASE_SERVICE_NAME=raffle-postgres -p POSTGRESQL_USER=postgresql -p POSTGRESQL_PASSWORD=postgresql -p POSTGRESQL_DATABASE=raffle-persistance
+$ oc new-app postgresql-persistent --name=raffle-postgres -p DATABASE_SERVICE_NAME=raffle-postgres -p POSTGRESQL_USER=postgresql -p POSTGRESQL_PASSWORD=postgresql -p POSTGRESQL_DATABASE=raffle
 
 $ oc rsync sql/ <POD_NAME>:/opt/app-root/src
 
