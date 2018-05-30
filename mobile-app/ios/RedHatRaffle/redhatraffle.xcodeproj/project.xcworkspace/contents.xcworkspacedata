@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/tejones/development/repos/RedHatScanner/Red Hat Raffle.xcodeproj">
+      location = "self:/Users/tejones/development/repos/redhat-raffle/mobile-app/ios/RedHatRaffle/redhatraffle.xcodeproj">
    </FileRef>
 </Workspace>

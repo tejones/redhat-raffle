@@ -1,12 +1,14 @@
-package com.redhat.hotelbooking;
+package com.redhat.raffle;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-public class InventoryApplication extends SpringBootServletInitializer {
-	 public static void main(String[] args) {
-	        SpringApplication.run(InventoryApplication.class);
-	    }
+@EnableJpaAuditing
+public class RaffleApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(RaffleApplication.class, args);
+	}
 }
+

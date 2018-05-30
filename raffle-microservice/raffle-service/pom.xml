@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.redhat.hotelbooking</groupId>
-	<artifactId>inventory-service</artifactId>
+	<groupId>com.redhat.raffle</groupId>
+	<artifactId>raffle-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>inventory-service</name>
-	<description>Inventory Service for Hotel Booking Demo</description>
+	<name>raffle-service</name>
+	<description>Red Hat Raffle Service</description>
 
 	<parent>
 		<groupId>io.openshift</groupId>
@@ -20,7 +20,7 @@
 	<repositories>
 		<repository>
 			<id>redhat-repo</id>
-			<nameredhat repo</name>
+			<name>redhat repo</name>
 			<url>https://maven.repository.redhat.com/ga/</url>
 		</repository>
 	</repositories>
@@ -47,36 +47,31 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<!-- <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.1.RELEASE</version>
+		<relativePath/> lookup parent from repository
+	</parent> -->
+
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.2</version>
+		</dependency> 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- Teiid Dependency -->
-		<dependency>
-			<groupId>org.jboss.teiid</groupId>
-			<artifactId>teiid-client</artifactId>
-			<version>${teiid.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.teiid</groupId>
-			<artifactId>teiid-hibernate-dialect</artifactId>
-			<version>${teiid.version}</version>
 		</dependency>
 	</dependencies>
 

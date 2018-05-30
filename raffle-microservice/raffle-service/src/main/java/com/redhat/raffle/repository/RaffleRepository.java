@@ -1,10 +1,15 @@
-package com.redhat.hotelbooking.repository;
+package com.redhat.raffle.repository;
 
-import com.redhat.hotelbooking.bean.Hotel;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import java.util.List;
 
-public interface HotelRepository extends PagingAndSortingRepository<Hotel, Integer> {
-    Page<Hotel> findByCity(Pageable pageable, String city);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.redhat.raffle.bean.Attendee;
+
+@Repository
+public interface RaffleRepository extends JpaRepository<Attendee, String> {
+	List<Attendee> findById(String uid);
+
+	boolean existsById(String uid);
 }

@@ -1,38 +1,47 @@
-package com.redhat.hotelbooking.controller;
+package com.redhat.raffle.controller;
 
-import com.redhat.hotelbooking.bean.Hotel;
-import com.redhat.hotelbooking.service.HotelService;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-
+import com.redhat.raffle.bean.Attendee;
+import com.redhat.raffle.repository.RaffleRepository;
 
 @RestController
-//specifying endpoint location
-@RequestMapping("/attendee")
 public class AttendeeController {
 
-    @Autowired
-    private HotelService hotelService;
+	@Autowired
+	private RaffleRepository raffleRepository;
 
-    /**
-     the getAll method retrieves all food items in the database. This is mapped to hte GET rest action
-     @return A List() of Hotel items
-     **/
-    @RequestMapping(method=RequestMethod.GET)
-    public Page<Hotel> list(Pageable pageable) {
-        return hotelService.listAllByPage(pageable);
-    }
+	@GetMapping("/raffle/attendees")
+	public List<Attendee> getAttendees() {
+		return raffleRepository.findAll();
+	}
+	
+	@GetMapping("/raffle/randomizedattendees")
+	public List<Attendee> getRandomizedAttendees() {
+		List<Attendee> attendees = raffleRepository.findAll();
+		Collections.shuffle(attendees);
+		return attendees;
+	}
 
-    /**
-     the getAll method retrieves all food items in the database. This is mapped to hte GET rest action
-     @return A List() of Hotel items
-     **/
-    @RequestMapping(method=RequestMethod.GET, value="/findbyuserid")
-    public Page<Hotel> findByUserID(@RequestParam("userid") String userid, Pageable pageable) throws IOException {
-        return hotelService.findByUserID(pageable, userid);
-    }
+	@GetMapping("/raffle/scanAttendee/{scannedValue}")
+	public Attendee scanAttendee(@PathVariable String scannedValue) {
+		String[] parsedScannedValue = scannedValue.split("\\|");
+		String lastName = parsedScannedValue[1];
+		String firstName = parsedScannedValue[2];
+		String uid = parsedScannedValue[0];
+
+		Attendee attendee = new Attendee();
+		attendee.setId(uid);
+		attendee.setFirstName(firstName);
+		attendee.setLastName(lastName);
+		attendee.setScannedValue(scannedValue);
+
+		return raffleRepository.save(attendee);
+	}
 }

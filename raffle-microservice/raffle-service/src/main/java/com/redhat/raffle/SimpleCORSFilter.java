@@ -1,4 +1,4 @@
-package com.redhat.hotelbooking;
+package com.redhat.raffle;
 
 import java.io.IOException;
 import javax.servlet.Filter;
