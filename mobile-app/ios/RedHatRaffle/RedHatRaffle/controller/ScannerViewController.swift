@@ -195,14 +195,13 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             }
             
             do {
-                guard let resResponse =  try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any],
-                    let attendeeResponse = resResponse as? [String: Any]
+                guard let attendeeResponse =  try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
                     else { return }
                 
                 //get the json object
                 
                     let attendee = Attendee(attendeeFirstName: attendeeResponse["firstName"] as! String, attendeeLastName: attendeeResponse["lastName"] as! String, uid: attendeeResponse["id"] as! String)
-//                    self.displayDialog(title: "Scan Successful", message: (attendee?.attendeeFirstName)! + " " + (attendee?.attendeeLastName)!)
+                    self.displayDialog(title: "Scan Successful", message: (attendee?.attendeeFirstName)! + " " + (attendee?.attendeeLastName)!)
                 
                 DispatchQueue.main.async{
 

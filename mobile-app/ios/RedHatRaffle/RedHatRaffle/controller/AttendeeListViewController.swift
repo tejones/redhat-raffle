@@ -104,13 +104,12 @@ class AttendeeListViewController: UIViewController {
             }
             
             do {
-                guard let resResponse =  try JSONSerialization.jsonObject(with: data!, options: []) as? [[String: Any]],
-                    let attendees = resResponse as? [[String: Any]]
-                    else { return }
+                guard let attendeesResponse =  try JSONSerialization.jsonObject(with: data!, options: []) as? [[String: Any]]
+                else { return }
                 
-                //looping through all the json objects in the array teams
-                for i in 0 ..< attendees.count{
-                    let attendee = Attendee(attendeeFirstName: attendees[i]["firstName"] as! String, attendeeLastName: attendees[i]["lastName"] as! String, uid: attendees[i]["id"] as! String)
+                //looping through all the json objects in the array 
+                for i in 0 ..< attendeesResponse.count{
+                    let attendee = Attendee(attendeeFirstName: attendeesResponse[i]["firstName"] as! String, attendeeLastName: attendeesResponse[i]["lastName"] as! String, uid: attendeesResponse[i]["id"] as! String)
                     self.attendeesArray.append( attendee! )
                 }
                 
