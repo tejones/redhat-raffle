@@ -9,7 +9,11 @@ import UIKit
 
 class AttendeeListViewController: UIViewController {
     
-    var attendees = [Attendee]()
+    let url = "http://red-hat-raffle.ngrok.io/"
+    
+    var attendeesArray: [ Attendee ] = [ Attendee ]()
+    
+    @IBOutlet weak var attendeeTableView: UITableView!
     
     @IBOutlet weak var eventButton: UIBarButtonItem!
     
@@ -17,39 +21,16 @@ class AttendeeListViewController: UIViewController {
     
     // Table view cells are reused and should be dequeued using     a cell identifier.
     let cellIdentifier = "AttendeeListViewCell"
-
    
     override func viewDidLoad() {
         super.viewDidLoad()
     
         navigationItem.title = "Attendees"
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Load the sample data.
-        loadSampleAttendees()
-        
-//        if (!(scannedCode?.isEmpty)!){
-//            self.showCode(scannedCode!)
-//        }
-//
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        //self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
+        // Load the attendee data.
+        loadData()
     
-//    func showCode(_ code: String) {
-//
-//       //  create the alert
-//        let alert = UIAlertController(title: "Scanned value", message: code, preferredStyle: UIAlertControllerStyle.alert)
-//
-//        // add an action (button)
-//        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-//
-//        // show the alert
-//        self.present(alert, animated: true, completion: nil)
-//
-//    }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -61,127 +42,139 @@ class AttendeeListViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-
-//    // MARK: - Table view data source
-//
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 1
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return attendees.count
-//    }
-//
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! AttendeeListViewCell
-//
-//        // Fetches the appropriate meal for the data source layout.
-//        let attendee = attendees[indexPath.row]
-//
-//        cell.name?.text = attendee.attendeeFirstName + " " + attendee.attendeeLastName
-//        cell.company?.text = attendee.company
-//
-//        return cell
-//    }
-//
-//    /*
-//    // Override to support conditional editing of the table view.
-//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        // Return false if you do not want the specified item to be editable.
-//        return true
-//    }
-//    */
-//
-//    /*
-//    // Override to support editing the table view.
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            // Delete the row from the data source
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        } else if editingStyle == .insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }
-//    }
-//    */
-//
-//    /*
-//    // Override to support rearranging the table view.
-//    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-//
-//    }
-//    */
-//
-//    /*
-//    // Override to support conditional rearranging of the table view.
-//    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//        // Return false if you do not want the item to be re-orderable.
-//        return true
-//    }
-//    */
-//
-//    /*
-//    // MARK: - Navigation
-//
-//    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//    }
-//    */
-    
     //MARK: Private Methods
-    
-    private func loadSampleAttendees() {
-        
 
-        guard let attendee1 = Attendee(attendeeFirstName: "Bugs", attendeeLastName: "Bunny", company: "Looney Tunes") else
-        {
-            fatalError("Unable to instantiate attendee1")
-        }
+    func loadData() {
         
-        guard let attendee2 = Attendee(attendeeFirstName: "Joe", attendeeLastName: "Magraine", company: "St. Louis Cardinals") else
-        {
-            fatalError("Unable to instantiate attendee2")
-        }
-
-        guard let attendee3 = Attendee(attendeeFirstName: "Mary", attendeeLastName: "Poppins", company: "Nanny, Inc.") else
-        {
-            fatalError("Unable to instantiate attendee3")
-        }
+        //Clear out attendeesArray
+        self.attendeesArray.removeAll()
         
-        attendees += [attendee1, attendee2, attendee3]
+        //Create Activity Indicator
+        let attendeesActivityMonitor = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
         
-        if (self.scannedCode?.isEmpty)!{
+        // Position Activity Indicator in the center of the main view
+        attendeesActivityMonitor.center = view.center
+        
+        // If needed, you can prevent Acivity Indicator from hiding when stopAnimating() is called
+        attendeesActivityMonitor.hidesWhenStopped = false
+        
+        // Start Activity Indicator
+        attendeesActivityMonitor.startAnimating()
+        
+        view.addSubview( attendeesActivityMonitor )
+        
+        let errorMessage = "Attendee request failed"
+        let errorMessageTitle = "Error"
+        let noAttendeesFound = "There are no scanned attendees."
+        let noAttendeesFoundMessageTitle = "No Attendees Found"
+        
+        // Define base URL
+        let baseUrl = url + "raffle/attendees/"
+        // Create URL Object
+        let myUrl = URL(string: baseUrl);
+        
+        // Create URL Request
+        var request = URLRequest(url:myUrl!);
+        
+        // Set request HTTP method to GET. It could be POST as well
+        request.httpMethod = "GET"
+        
+        // Excute HTTP Request
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
             
-        } else{
-            guard let attendee4 = Attendee(attendeeFirstName: self.scannedCode!, attendeeLastName: "Scanned", company: "Scanned, Inc.") else
+            // Check for error
+            if error != nil
             {
-                fatalError("Unable to instantiate attendee3")
+                self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                self.displayDialog( title: errorMessageTitle, message: errorMessage )
+                return
             }
-            attendees += [attendee4]
+            
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            if (responseString == nil) {
+                self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                print("attendee request failed")
+                self.displayDialog(title: errorMessageTitle, message: errorMessage)
+            } else {
+                if (responseString?.contains("status = 404"))! {
+                    self.displayDialog(title: noAttendeesFoundMessageTitle, message: noAttendeesFound)
+                    self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                }
+            }
+            
+            do {
+                guard let resResponse =  try JSONSerialization.jsonObject(with: data!, options: []) as? [[String: Any]],
+                    let attendees = resResponse as? [[String: Any]]
+                    else { return }
+                
+                //looping through all the json objects in the array teams
+                for i in 0 ..< attendees.count{
+                    let attendee = Attendee(attendeeFirstName: attendees[i]["firstName"] as! String, attendeeLastName: attendees[i]["lastName"] as! String, uid: attendees[i]["id"] as! String)
+                    self.attendeesArray.append( attendee! )
+                }
+                
+                DispatchQueue.main.async{
+                    self.attendeeTableView.reloadData()
+                    self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                }
+                
+                
+            } catch {
+                self.displayDialog(title: errorMessageTitle, message: errorMessage)
+                self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                print(error.localizedDescription)
+            }
+            
+        }
+        
+        task.resume()
+        
+    }
+
+    func displayDialog(title: String, message: String) -> Void {
+        
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let OkAction = UIAlertAction(title: "Ok", style: .default)
+            { (action:UIAlertAction!) in
+                DispatchQueue.main.async
+                    {
+                        self.dismiss(animated: true, completion: nil)
+                        
+                }
+            }
+            
+            alertController.addAction(OkAction)
+            self.present(alertController, animated: true, completion:  nil)
         }
     }
 
-}
-
-// MARK: UITableViewDelegate extension
-extension AttendeeListViewController: UITableViewDelegate  {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+    func removeActivityIndicator(activityIndicator: UIActivityIndicatorView)
+    {
+        DispatchQueue.main.async {
+            activityIndicator.stopAnimating()
+            activityIndicator.removeFromSuperview()
+        }
     }
-    
-}
+    }
+
+    // MARK: UITableViewDelegate extension
+    extension AttendeeListViewController: UITableViewDelegate  {
+        
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            return 25
+        }
+        
+    }
 
 // MARK: UITableViewDataSource extension
 extension AttendeeListViewController: UITableViewDataSource  {
 
     
             func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-                return attendees.count
+                return attendeesArray.count
             }
     
     
@@ -190,10 +183,10 @@ extension AttendeeListViewController: UITableViewDataSource  {
                 let cell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! AttendeeListViewCell
         
                 // Fetches the appropriate meal for the data source layout.
-                let attendee = attendees[indexPath.row]
+                let attendee = attendeesArray[indexPath.row]
         
                 cell.name?.text = attendee.attendeeFirstName + " " + attendee.attendeeLastName
-                cell.company?.text = attendee.company
+                cell.uid?.text = attendee.uid
         
                 return cell
             }

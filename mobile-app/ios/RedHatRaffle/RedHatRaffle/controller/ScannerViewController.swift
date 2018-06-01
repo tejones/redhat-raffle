@@ -12,6 +12,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     var captureDevice:AVCaptureDevice?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var captureSession:AVCaptureSession?
+    let url = "http://red-hat-raffle.ngrok.io/"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,11 +120,133 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     func displayDetailsViewController(scannedCode: String) {
 
-        //TODO Make call to A-MQ with scanned value
         let attendeeViewController = self.storyboard?.instantiateViewController(withIdentifier: "attendeeList") as!  AttendeeListViewController
         attendeeViewController.scannedCode = scannedCode
-        self.navigationController?.pushViewController(attendeeViewController, animated: true)
+        insertScannedValue(scannedValue: scannedCode)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.navigationController?.pushViewController(attendeeViewController, animated: true)
+        }
+       
 
+    }
+    
+    func insertScannedValue(scannedValue: String) {
+        
+        //Create Activity Indicator
+        let attendeesActivityMonitor = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        
+        // Position Activity Indicator in the center of the main view
+        attendeesActivityMonitor.center = view.center
+        
+        // If needed, you can prevent Acivity Indicator from hiding when stopAnimating() is called
+        attendeesActivityMonitor.hidesWhenStopped = false
+        
+        // Start Activity Indicator
+        attendeesActivityMonitor.startAnimating()
+        
+        view.addSubview( attendeesActivityMonitor )
+        
+        let errorMessage = "Attendee request failed"
+        let errorMessageTitle = "Error"
+        let noAttendeesFound = "There are no scanned attendees."
+        let noAttendeesFoundMessageTitle = "No Attendees Found"
+        
+        // Define base URL
+        let baseUrl = url + "raffle/scanAttendee/"
+        
+        // Add parameter
+        let urlWithParams = baseUrl + scannedValue
+       
+        // URL Encode
+        let escapedString = urlWithParams.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)
+
+        // Create URL Ibject
+        let myUrl = URL(string: escapedString!);
+        
+        // Create URL Request
+        var request = URLRequest(url:myUrl!);
+        
+        // Set request HTTP method to GET. It could be POST as well
+        request.httpMethod = "GET"
+        
+        // Excute HTTP Request
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            // Check for error
+            if error != nil
+            {
+                self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                self.displayDialog( title: errorMessageTitle, message: errorMessage )
+                return
+            }
+            
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            if (responseString == nil) {
+                self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                print("attendee request failed")
+                self.displayDialog(title: errorMessageTitle, message: errorMessage)
+            } else {
+                if (responseString?.contains("status = 404"))! {
+                    self.displayDialog(title: noAttendeesFoundMessageTitle, message: noAttendeesFound)
+                    self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                }
+            }
+            
+            do {
+                guard let resResponse =  try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any],
+                    let attendeeResponse = resResponse as? [String: Any]
+                    else { return }
+                
+                //get the json object
+                
+                    let attendee = Attendee(attendeeFirstName: attendeeResponse["firstName"] as! String, attendeeLastName: attendeeResponse["lastName"] as! String, uid: attendeeResponse["id"] as! String)
+//                    self.displayDialog(title: "Scan Successful", message: (attendee?.attendeeFirstName)! + " " + (attendee?.attendeeLastName)!)
+                
+                DispatchQueue.main.async{
+
+                    self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                }
+                
+                
+            } catch {
+                self.displayDialog(title: errorMessageTitle, message: errorMessage)
+                self.removeActivityIndicator( activityIndicator: attendeesActivityMonitor )
+                print(error.localizedDescription)
+            }
+            
+        }
+        
+        task.resume()
+        
+    }
+    
+    func displayDialog(title: String, message: String) -> Void {
+        
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let OkAction = UIAlertAction(title: "Ok", style: .default)
+            { (action:UIAlertAction!) in
+                DispatchQueue.main.async
+                    {
+                        self.dismiss(animated: true, completion: nil)
+                        
+                }
+            }
+            
+            alertController.addAction(OkAction)
+            self.present(alertController, animated: true, completion:  nil)
+        }
+    }
+    
+    func removeActivityIndicator(activityIndicator: UIActivityIndicatorView)
+    {
+        DispatchQueue.main.async {
+            activityIndicator.stopAnimating()
+            activityIndicator.removeFromSuperview()
+        }
     }
 
 }

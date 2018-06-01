@@ -3,7 +3,9 @@ package com.redhat.raffle.controller;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.impl.StringConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,8 @@ import com.redhat.raffle.repository.RaffleRepository;
 
 @RestController
 public class AttendeeController {
+	
+	public static String EMPTY_STRING = "";
 
 	@Autowired
 	private RaffleRepository raffleRepository;
@@ -31,7 +35,10 @@ public class AttendeeController {
 
 	@GetMapping("/raffle/scanAttendee/{scannedValue}")
 	public Attendee scanAttendee(@PathVariable String scannedValue) {
-		String[] parsedScannedValue = scannedValue.split("\\|");
+		String originalScannedvalue = scannedValue;
+		String newScannedValue = scannedValue.replace("z_1", EMPTY_STRING);
+		newScannedValue = newScannedValue.replace("_", EMPTY_STRING);
+		String[] parsedScannedValue = newScannedValue.split("\\|");
 		String lastName = parsedScannedValue[1];
 		String firstName = parsedScannedValue[2];
 		String uid = parsedScannedValue[0];
@@ -40,7 +47,7 @@ public class AttendeeController {
 		attendee.setId(uid);
 		attendee.setFirstName(firstName);
 		attendee.setLastName(lastName);
-		attendee.setScannedValue(scannedValue);
+		attendee.setScannedValue(originalScannedvalue);
 
 		return raffleRepository.save(attendee);
 	}

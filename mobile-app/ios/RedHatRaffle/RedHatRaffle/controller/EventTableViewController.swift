@@ -114,27 +114,27 @@ class EventTableViewController: UITableViewController {
         
         var startDate: Date? = formatter.date(from: "08-May-2018")
         var endDate: Date? = formatter.date(from: "10-May-2018")
-        guard let event1 = Event(eventName: "Red Hat Summit 2018", eventLocation: "San Francisco, California USA", eventStartDate: startDate!, eventEndDate: endDate!) else {
-            fatalError("Unable to instantiate event1")
-        }
+//        guard let event1 = Event(eventName: "Red Hat Summit 2018", eventLocation: "San Francisco, California USA", eventStartDate: startDate!, eventEndDate: endDate!) else {
+//            fatalError("Unable to instantiate event1")
+//        }
         
-        startDate = formatter.date(from: "06-Jun-2018")
-        endDate = formatter.date(from: "06-Jun-2018")
+        startDate = formatter.date(from: "05-Jun-2018")
+        endDate = formatter.date(from: "07-Jun-2018")
         guard let event2 = Event(eventName: "SAP Sapphire 2018", eventLocation: "Orlando, Florida USA", eventStartDate: startDate!, eventEndDate: endDate!) else {
             fatalError("Unable to instantiate event2")
         }
         
-        startDate = formatter.date(from: "02-Aug-2018")
-        endDate = formatter.date(from: "06-Aug-2018")
-        guard let event3 = Event(eventName: "Nerdvana 2018", eventLocation: "Seattle, Washington USA", eventStartDate: startDate!, eventEndDate: endDate!) else {
-            fatalError("Unable to instantiate event2")
-        }
+//        startDate = formatter.date(from: "02-Aug-2018")
+//        endDate = formatter.date(from: "06-Aug-2018")
+//        guard let event3 = Event(eventName: "Nerdvana 2018", eventLocation: "Seattle, Washington USA", eventStartDate: startDate!, eventEndDate: endDate!) else {
+//            fatalError("Unable to instantiate event2")
+//        }
 //
 //        guard let meal3 = Meal(name: "Pasta with Meatballs", photo: photo3, rating: 3) else {
 //            fatalError("Unable to instantiate meal2")
 //        }
         
-        events += [event1, event2, event3]
+        events += [event2]
     }
 
 }

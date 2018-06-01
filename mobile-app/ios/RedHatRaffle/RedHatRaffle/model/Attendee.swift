@@ -13,11 +13,11 @@ class Attendee {
     
     var attendeeFirstName: String 
     var attendeeLastName: String
-    var company: String
+    var uid: String
     
     //MARK: Initialization
     
-    init?(attendeeFirstName: String, attendeeLastName: String, company: String ) {
+    init?(attendeeFirstName: String, attendeeLastName: String, uid: String ) {
         
         // The first name must not be empty
         guard !attendeeFirstName.isEmpty else {
@@ -32,7 +32,7 @@ class Attendee {
         // Initialize stored properties.
         self.attendeeFirstName = attendeeFirstName
         self.attendeeLastName = attendeeLastName
-        self.company = company
+        self.uid = uid
         
     }
     

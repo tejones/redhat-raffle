@@ -10,7 +10,7 @@ import UIKit
 class AttendeeListViewCell: UITableViewCell {
     //MARK: Properties
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var company: UILabel!
+    @IBOutlet weak var uid: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

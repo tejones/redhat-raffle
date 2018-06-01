@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fbJ-OY-sBF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fbJ-OY-sBF">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
         <!--Attendee List View Controller-->
         <scene sceneID="B8r-5n-x5b">
             <objects>
-                <viewController restorationIdentifier="attendeeList" storyboardIdentifier="attendeeList" title="Attendees" modalTransitionStyle="flipHorizontal" id="S1F-8u-3C6" userLabel="Attendee List View Controller" customClass="AttendeeListViewController" customModule="RedHatScanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="attendeeList" storyboardIdentifier="attendeeList" title="Attendees" modalTransitionStyle="flipHorizontal" id="S1F-8u-3C6" userLabel="Attendee List View Controller" customClass="AttendeeListViewController" customModule="RedHatRaffle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FLb-7i-wuz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -47,11 +47,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wmm-wx-rne">
                                         <rect key="frame" x="0.0" y="119" width="414" height="513"/>
                                         <subviews>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="RiY-Wm-VCo">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="RiY-Wm-VCo">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="513"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendeeListViewCell" rowHeight="94" id="Tzy-K1-dKI" customClass="AttendeeListViewCell" customModule="RedHatScanner" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendeeListViewCell" rowHeight="94" id="Tzy-K1-dKI" customClass="AttendeeListViewCell" customModule="RedHatRaffle" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="414" height="94"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tzy-K1-dKI" id="IpM-Wk-cYN">
@@ -64,7 +64,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ebl-P6-tQa">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ebl-P6-tQa">
                                                                     <rect key="frame" x="8" y="64.666666666666671" width="398" height="24"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                     <nil key="textColor"/>
@@ -83,8 +83,8 @@
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" red="0.97622966443470716" green="1" blue="0.98261188338781291" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <connections>
-                                                            <outlet property="company" destination="Ebl-P6-tQa" id="6ah-aC-mrn"/>
                                                             <outlet property="name" destination="Qp4-fq-2O2" id="MWX-Di-ebb"/>
+                                                            <outlet property="uid" destination="Ebl-P6-tQa" id="NyU-l1-wpS"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
@@ -123,6 +123,7 @@
                         </connections>
                     </navigationItem>
                     <connections>
+                        <outlet property="attendeeTableView" destination="RiY-Wm-VCo" id="QgG-Kr-rbT"/>
                         <outlet property="eventButton" destination="SqJ-yb-eQS" id="ZYL-Ky-X9w"/>
                     </connections>
                 </viewController>
@@ -161,7 +162,7 @@
         <!--ScannerView-->
         <scene sceneID="F3Y-kC-djs">
             <objects>
-                <viewController title="Scanner" modalPresentationStyle="currentContext" id="4I6-fo-lwS" userLabel="ScannerView" customClass="ScannerViewController" customModule="RedHatScanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Scanner" modalPresentationStyle="currentContext" id="4I6-fo-lwS" userLabel="ScannerView" customClass="ScannerViewController" customModule="RedHatRaffle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JWn-L8-fnA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -176,13 +177,13 @@
         <!--Events-->
         <scene sceneID="JtJ-Md-04B">
             <objects>
-                <viewController storyboardIdentifier="EventTableViewController" title="Events" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fbJ-OY-sBF" customClass="EventTableViewController" customModule="RedHatScanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EventTableViewController" title="Events" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fbJ-OY-sBF" customClass="EventTableViewController" customModule="RedHatRaffle" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hkG-aR-bwg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EventTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventTableViewCell" rowHeight="119" id="vTW-nQ-4Vo" customClass="EventTableViewCell" customModule="RedHatScanner" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EventTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventTableViewCell" rowHeight="119" id="vTW-nQ-4Vo" customClass="EventTableViewCell" customModule="RedHatRaffle" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="119"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vTW-nQ-4Vo" id="1Lc-QV-xQv">
