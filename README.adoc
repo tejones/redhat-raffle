@@ -1,6 +1,6 @@
 image:redhat_raffle_big.png[Red Hat Raffle Logo, title="Red Hat Raffle Logo"]
 
-IMPORTANT: Requires Xcode 9.x 0r greater.
+IMPORTANT: Requires Xcode 9.x or greater.
 
 IMPORTANT: Requires ngrok.
 
