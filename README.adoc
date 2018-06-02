@@ -70,6 +70,7 @@ The web app is an HTML5 page that draws a random order list of scanned attendees
 ----
 Accessing the web application:
 
-TBD
+The web page to draw the winner is at the root of the raffle service host name. From there click on the fireworks background to draw the first random winner. Click on the winner to close. Click on the web page again to draw the next winner. Refreshing the page with generate a new random list of entrants.
+
 ----
 
