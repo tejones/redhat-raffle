@@ -63,14 +63,15 @@ Load the project into Xcode 9.x or greater. Change the event title, dates and lo
 
 Install onto iPhone or iPod for the event. Select the event after the app opens. The Scan button will display with scanned attendees. The list will be empty when you first start the app (since you haven't scanned anyone yet). Press the scan button and hold the camera over the barcode or QR Code. The attendee will be added to the attendee list.
 
+== Note: The parsing algorithm in the scan attendee service may vary for your event. You may need to adjust accordingly. Email me at tejones@redhat.com if you need help with that.
+
 == Web Application
 The web app is an HTML5 page that draws a random order list of scanned attendees and iterates through the list until an attendee that is present at the drawing raises their hand, screams, etc.
 
 [source,bash,options="nowrap",subs="attributes+"]
-----
-Accessing the web application:
+
+== Using the Web Application:
 
 The web page to draw the winner is at the root of the raffle service host name. From there click on the fireworks background to draw the first random winner. Click on the winner to close. Click on the web page again to draw the next winner. Refreshing the page with generate a new random list of entrants.
 
-----
 
