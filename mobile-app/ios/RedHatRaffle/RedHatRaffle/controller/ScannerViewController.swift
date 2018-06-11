@@ -114,7 +114,12 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         captureSession?.stopRunning()
         
         // Call the function which performs navigation and pass the code string value we just detected
-        displayDetailsViewController(scannedCode: stringCodeValue)
+        if stringCodeValue.lowercased().range(of:"|") != nil {
+             displayDetailsViewController(scannedCode: stringCodeValue)
+        } else {
+            displayErrorDialog(title: "Wrong side!", message: "Please scan the other side of the badge.")
+            return
+        }
         
     }
     
@@ -128,7 +133,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             self.navigationController?.pushViewController(attendeeViewController, animated: true)
         }
        
-
     }
     
     func insertScannedValue(scannedValue: String) {
@@ -198,7 +202,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 guard let attendeeResponse =  try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
                     else { return }
                 
-                //get the json object
+                //get the json object and display success message
                 
                     let attendee = Attendee(attendeeFirstName: attendeeResponse["firstName"] as! String, attendeeLastName: attendeeResponse["lastName"] as! String, uid: attendeeResponse["id"] as! String)
                     self.displayDialog(title: "Scan Successful", message: (attendee?.attendeeFirstName)! + " " + (attendee?.attendeeLastName)!)
@@ -230,7 +234,27 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             { (action:UIAlertAction!) in
                 DispatchQueue.main.async
                     {
-                        self.dismiss(animated: true, completion: nil)
+                         alertController.dismiss(animated: true, completion: nil)
+                        
+                }
+            }
+            
+            alertController.addAction(OkAction)
+            self.present(alertController, animated: true, completion:  nil)
+        }
+    }
+    
+    func displayErrorDialog(title: String, message: String) -> Void {
+        
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let OkAction = UIAlertAction(title: "Ok", style: .default)
+            { (action:UIAlertAction!) in
+                DispatchQueue.main.async
+                    {
+                       alertController.dismiss(animated: true, completion: nil)
+                       self.dismiss(animated: true, completion: nil)
                         
                 }
             }

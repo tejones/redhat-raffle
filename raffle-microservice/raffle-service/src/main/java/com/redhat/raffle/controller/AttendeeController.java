@@ -1,11 +1,10 @@
 package com.redhat.raffle.controller;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.impl.StringConstant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +20,13 @@ public class AttendeeController {
 	@Autowired
 	private RaffleRepository raffleRepository;
 
+	//Return all attendees sorted by updatedDate
 	@GetMapping("/raffle/attendees")
 	public List<Attendee> getAttendees() {
-		return raffleRepository.findAll();
+		AttendeeUpdatedTimeComparator attendeeComparator = new AttendeeUpdatedTimeComparator();
+		List<Attendee> attendees = raffleRepository.findAll();
+		Collections.sort(attendees, attendeeComparator);
+		return attendees;
 	}
 	
 	@GetMapping("/raffle/randomizedattendees")
@@ -33,7 +36,7 @@ public class AttendeeController {
 		return attendees;
 	}
 
-	@GetMapping("/raffle/scanAttendee/{scannedValue}")
+	@GetMapping("raffle/scanAttendee/{scannedValue}")
 	public Attendee scanAttendee(@PathVariable String scannedValue) {
 		String originalScannedvalue = scannedValue;
 		String newScannedValue = scannedValue.replace("z_1", EMPTY_STRING);
@@ -51,4 +54,11 @@ public class AttendeeController {
 
 		return raffleRepository.save(attendee);
 	}
+
+public class AttendeeUpdatedTimeComparator implements Comparator<Attendee> {
+    @Override
+    public int compare(Attendee firstAttendee, Attendee secondAttendee) {
+       return (secondAttendee.getUpdatedAt().compareTo(firstAttendee.getUpdatedAt()));
+    }
+}
 }
