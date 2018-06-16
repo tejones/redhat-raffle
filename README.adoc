@@ -68,11 +68,11 @@ Install onto iPhone or iPod for the event. Select the event after the app opens.
 == Exposing Your Service to the Web and Mobile Application
 To allow the web application and mobile application to use you raffle service running on openshift, you need to do two things:
 1. Port forward
-===oc port-forward {raffle-service-pod-name}  8080:8080
+`+{backtick}+`oc port-forward {raffle-service-pod-name}  8080:8080
 
 2. Install and run ngrok to create a public URL using secure tunneling.
 I got the basic account so I could create a subdomain. That way the url will remain constant in the web and mobile applications. To start ngrok tunneling with a subdomain, run:
-===./ngrok http -subdomain={subdomain} 8080
+`+{backtick}+`./ngrok http -subdomain={subdomain} 8080
 
 The base endpoint will be http://{subdomain}.ngrok.io
 
