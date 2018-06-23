@@ -78,7 +78,6 @@
 				26F619461F292A090041AC96 /* assets */,
 				267C20351F1957CB00C3C4CD /* AppDelegate.swift */,
 				267C203C1F1957CB00C3C4CD /* Assets.xcassets */,
-				267C20411F1957CB00C3C4CD /* Info.plist */,
 			);
 			path = RedHatRaffle;
 			sourceTree = "<group>";
@@ -86,6 +85,7 @@
 		26F619461F292A090041AC96 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				267C20411F1957CB00C3C4CD /* Info.plist */,
 				26F619471F292A170041AC96 /* beep-07.mp3 */,
 			);
 			path = assets;
@@ -329,11 +329,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7LLT65DGJS;
-				INFOPLIST_FILE = "$(SRCROOT)/RedHatRaffle/Info.plist";
+				DEVELOPMENT_TEAM = 3AUPQ3D589;
+				INFOPLIST_FILE = "$(SRCROOT)/RedHatRaffle/assets/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.redhat.raffle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redhat.raffle.hpe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -348,11 +348,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7LLT65DGJS;
-				INFOPLIST_FILE = "$(SRCROOT)/RedHatRaffle/Info.plist";
+				DEVELOPMENT_TEAM = 3AUPQ3D589;
+				INFOPLIST_FILE = "$(SRCROOT)/RedHatRaffle/assets/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.redhat.raffle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redhat.raffle.hpe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -38,19 +38,20 @@ public class AttendeeController {
 
 	@GetMapping("raffle/scanAttendee/{scannedValue}")
 	public Attendee scanAttendee(@PathVariable String scannedValue) {
-		String originalScannedvalue = scannedValue;
-		String newScannedValue = scannedValue.replace("z_1", EMPTY_STRING);
-		newScannedValue = newScannedValue.replace("_", EMPTY_STRING);
-		String[] parsedScannedValue = newScannedValue.split("\\|");
-		String lastName = parsedScannedValue[1];
-		String firstName = parsedScannedValue[2];
+//		String originalScannedvalue = scannedValue;
+//		String newScannedValue = scannedValue.replace("z_1", EMPTY_STRING);
+//		newScannedValue = newScannedValue.replace("_", EMPTY_STRING);
+		System.out.print("ScannedValue = " + scannedValue);
+		String[] parsedScannedValue = scannedValue.split("\\^");
+		String lastName = parsedScannedValue[2];
+		String firstName = parsedScannedValue[1];
 		String uid = parsedScannedValue[0];
 
 		Attendee attendee = new Attendee();
 		attendee.setId(uid);
 		attendee.setFirstName(firstName);
 		attendee.setLastName(lastName);
-		attendee.setScannedValue(originalScannedvalue);
+		attendee.setScannedValue(scannedValue);
 
 		return raffleRepository.save(attendee);
 	}

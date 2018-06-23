@@ -118,9 +118,9 @@ class EventTableViewController: UITableViewController {
 //            fatalError("Unable to instantiate event1")
 //        }
         
-        startDate = formatter.date(from: "05-Jun-2018")
-        endDate = formatter.date(from: "07-Jun-2018")
-        guard let event2 = Event(eventName: "SAP Sapphire 2018", eventLocation: "Orlando, Florida USA", eventStartDate: startDate!, eventEndDate: endDate!) else {
+        startDate = formatter.date(from: "18-Jun-2018")
+        endDate = formatter.date(from: "21-Jun-2018")
+        guard let event2 = Event(eventName: "HPE Discover 2018", eventLocation: "Las Vegas, Nevada USA", eventStartDate: startDate!, eventEndDate: endDate!) else {
             fatalError("Unable to instantiate event2")
         }
         

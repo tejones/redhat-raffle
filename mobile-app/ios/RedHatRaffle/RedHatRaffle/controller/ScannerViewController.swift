@@ -114,12 +114,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         captureSession?.stopRunning()
         
         // Call the function which performs navigation and pass the code string value we just detected
-        if stringCodeValue.lowercased().range(of:"|") != nil {
-             displayDetailsViewController(scannedCode: stringCodeValue)
-        } else {
-            displayErrorDialog(title: "Wrong side!", message: "Please scan the other side of the badge.")
-            return
-        }
+        
+        displayDetailsViewController(scannedCode: stringCodeValue.replacingOccurrences(of: "\n", with: ""))
+        
+//        if stringCodeValue.lowercased().range(of:"|") != nil {
+//             displayDetailsViewController(scannedCode: stringCodeValue)
+//        } else {
+//            displayErrorDialog(title: "Wrong side!", message: "Please scan the other side of the badge.")
+//            return
+//        }
         
     }
     
