@@ -65,6 +65,16 @@ Install onto iPhone or iPod for the event. Select the event after the app opens.
 
 == Note: The parsing algorithm in the scan attendee service may vary for your event. You may need to adjust accordingly. Email me at tejones@redhat.com if you need help with that.
 
+== Exposing Your Service to the Web and Mobile Application
+To allow the web application and mobile application to use you raffle service running on openshift, you need to do two things:
+*Port forward:* 
+**oc port-forward {raffle-service-pod-name}  8080:8080**
+
+*Install and run ngrok to create a public URL using secure tunneling.* I got the basic account so I could create a subdomain. That way the url will remain constant in the web and mobile applications. To start ngrok tunneling with a subdomain, run:
+**./ngrok http -subdomain={subdomain} 8080**
+
+The base endpoint will be http://{subdomain}.ngrok.io
+
 == Web Application
 The web app is an HTML5 page that draws a random order list of scanned attendees and iterates through the list until an attendee that is present at the drawing raises their hand, screams, etc.
 
